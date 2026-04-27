@@ -4,734 +4,818 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Spatiality</title>
+<link rel="icon" type="image/png" href="logonav.png">
 
 <!-- Fonts -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600&family=Playfair+Display:wght@500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <link href="https://api.fontshare.com/v2/css?f[]=clash-display@400,500,600,700&display=swap" rel="stylesheet">
 
 <style>
-:root{
-  --bg:#080810;
-  --primary:#ff99cc;
-  --secondary:#b366ff;
-  --text:#f0eef8;
-  --muted:rgba(240,238,248,0.55);
+:root {
+    --bg: #0a0a0a;
+    --text: #ffffff;
+    --text-secondary: #999999;
+    --primary: #ff99cc;
+    --border: rgba(255, 255, 255, 0.06);
 }
 
-*{margin:0;padding:0;box-sizing:border-box;}
-
-body{
-  background:var(--bg);
-  font-family:'Space Grotesk',sans-serif;
-  color:var(--text);
-  overflow:hidden;
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
 }
 
-canvas.space-bg{
-  position:fixed;
-  inset:0;
-  z-index:0;
-  display:block;
+html, body {
+    height: 100%;
+    overflow: hidden;
 }
 
-.title{
-  font-family:'Inter', sans-serif;
-  font-weight:400;
-  letter-spacing:-2px;
-  font-size:64px;
-  line-height:1.1;
-  white-space:nowrap;
+body {
+    background: var(--bg);
+    font-family: 'Inter', sans-serif;
+    color: var(--text);
+    -webkit-font-smoothing: antialiased;
 }
 
-.logo{
-  font-family:'Space Grotesk', sans-serif;
-  font-size:22px;
-  background:linear-gradient(135deg,#ff99cc,#b366ff);
-  -webkit-background-clip:text;
-  -webkit-text-fill-color:transparent;
+/* Background */
+canvas.space-bg {
+    position: fixed;
+    inset: 0;
+    z-index: 0;
+    display: block;
 }
 
-.wrapper{
-  position:relative;
-  z-index:2;
-  height:100vh;
-  display:flex;
-  flex-direction:column;
-  justify-content:space-between;
-  padding:60px;
-  pointer-events:none;
+/* Layout - altura total */
+.wrapper {
+    position: relative;
+    z-index: 2;
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    padding: 0 60px;
 }
 
-.wrapper *{
-  pointer-events:auto;
+/* Header */
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 24px 0;
+    width: 100%;
+    flex-shrink: 0;
 }
 
-.header{
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  padding:0 40px;
+.logo {
+    font-family: 'Clash Display', sans-serif;
+    font-size: 28px;
+    font-weight: 600;
+    letter-spacing: -0.3px;
+    color: var(--text);
+    text-decoration: none;
 }
 
-.header-logo{
-  font-family:'Clash Display', sans-serif;
-  font-size:36px;
-  font-weight:600;
-  background:linear-gradient(135deg,#ff99cc,#b366ff);
-  -webkit-background-clip:text;
-  -webkit-text-fill-color:transparent;
+.logo span {
+    color: var(--primary);
+    font-weight: 400;
 }
 
-.header-links{
-  display:flex;
-  gap:24px;
+.nav {
+    display: flex;
+    gap: 32px;
+    align-items: center;
 }
 
-.header-link{
-  color:var(--muted);
-  text-decoration:none;
-  font-size:14px;
-  transition:color 0.2s;
+.nav-link {
+    color: var(--text-secondary);
+    text-decoration: none;
+    font-size: 14px;
+    transition: color 0.2s;
 }
 
-.header-link:hover{
-  color:var(--text);
+.nav-link:hover {
+    color: var(--text);
 }
 
-.header-btn{
-  padding:10px 24px;
-  background:linear-gradient(135deg,#ff99cc,#b366ff);
-  color:#1a0d1a;
-  text-decoration:none;
-  border-radius:8px;
-  font-size:14px;
-  font-weight:600;
-  transition:transform 0.3s,box-shadow 0.3s;
+.nav-btn {
+    padding: 10px 22px;
+    border-radius: 6px;
+    background: var(--text);
+    color: var(--bg);
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: 500;
+    transition: opacity 0.2s;
 }
 
-.header-btn:hover{
-  transform:translateY(-2px);
-  box-shadow:0 8px 24px rgba(179,102,255,0.4);
+.nav-btn:hover {
+    opacity: 0.8;
 }
 
-.hero{
-  display:flex;
-  justify-content:flex-start;
-  align-items:center;
-  padding-left:80px;
+/* Conteúdo principal - ocupa espaço restante */
+.main-content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 40px;
+    min-height: 0;
+    padding: 20px 0;
 }
 
-.hero > div:first-child{
-  max-width:600px;
+/* Hero */
+.hero {
+    flex-shrink: 0;
 }
 
-.title span{
-  background:linear-gradient(135deg,#ff99cc,#b366ff);
-  -webkit-background-clip:text;
-  -webkit-text-fill-color:transparent;
+.hero-label {
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--primary);
+    margin-bottom: 20px;
 }
 
-.subtitle{
-  margin-top:20px;
-  font-size:18px;
-  color:var(--muted);
-  max-width:460px;
+.hero-title {
+    font-size: 72px;
+    font-weight: 300;
+    line-height: 1.05;
+    letter-spacing: -2px;
+    margin-bottom: 20px;
+    max-width: 100%;
+    white-space: nowrap;
 }
 
-.feature-tags{
-  display:flex;
-  justify-content:center;
-  gap:20px;
-  margin-top:28px;
+.hero-title strong {
+    font-weight: 700;
 }
 
-.tag{
-  font-size:13px;
-  color:var(--muted);
-  display:flex;
-  align-items:center;
-  gap:6px;
+.hero-desc {
+    font-size: 20px;
+    color: var(--text-secondary);
+    line-height: 1.6;
+    font-weight: 300;
+    margin-bottom: 36px;
+    max-width: 600px;
 }
 
-.tag-dot{
-  width:4px;
-  height:4px;
-  border-radius:50%;
-  background:linear-gradient(135deg,#ff99cc,#b366ff);
+.hero-actions {
+    display: flex;
+    gap: 16px;
+    align-items: center;
+    flex-wrap: wrap;
 }
 
-.buttons{
-  margin-top:40px;
-  display:flex;
-  gap:14px;
+.btn {
+    padding: 16px 32px;
+    border-radius: 8px;
+    font-size: 15px;
+    font-weight: 500;
+    text-decoration: none;
+    transition: all 0.2s;
+    cursor: pointer;
+    border: none;
+    font-family: 'Inter', sans-serif;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
 }
 
-.primary{
-  padding:16px 32px;
-  border:none;
-  border-radius:999px;
-  background:linear-gradient(135deg,#ff99cc,#b366ff);
-  color:#1a0d1a;
-  cursor:pointer;
-  font-weight:500;
+.btn-primary {
+    background: var(--primary);
+    color: var(--bg);
 }
 
-.secondary{
-  padding:16px 28px;
-  border:none;
-  border-radius:999px;
-  background:rgba(255,255,255,0.05);
-  color:var(--text);
-  cursor:pointer;
-  backdrop-filter:blur(8px);
+.btn-primary:hover {
+    opacity: 0.85;
 }
 
-.visual{
-  height:300px;
+.btn-ghost {
+    background: transparent;
+    color: var(--text);
+    border: 1px solid rgba(255, 255, 255, 0.1);
 }
 
-/* VISUALIZADOR DE BARRINHAS NO FOOTER */
-.viz-footer{
-  position:fixed;
-  bottom:0;
-  left:0;
-  width:100%;
-  height:108px;
-  z-index:1;
-  pointer-events:none;
-  overflow:hidden;
+.btn-ghost:hover {
+    background: rgba(255, 255, 255, 0.02);
+    border-color: rgba(255, 255, 255, 0.2);
 }
 
-.viz-footer::before{
-  display:none;
+/* Features - grid que ocupa toda largura */
+.features {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1px;
+    background: var(--border);
+    flex-shrink: 0;
 }
 
-.viz-footer canvas{
-  width:100%;
-  height:100%;
-  display:block;
+.feature {
+    background: var(--bg);
+    padding: 40px 36px;
+    transition: background 0.2s;
 }
 
-.footer{
-  position:relative;
-  display:flex;
-  justify-content:space-between;
-  font-size:12px;
-  color:var(--text);
-  z-index:2;
-  background:transparent;
+.feature:hover {
+    background: #0d0d0d;
 }
 
-.footer-links{
-  display:flex;
-  gap:28px;
+.feature-icon {
+    width: 24px;
+    height: 24px;
+    color: var(--primary);
+    margin-bottom: 20px;
+    opacity: 0.85;
 }
 
-.footer-link{
-  color:var(--text);
-  text-decoration:none;
-  transition:color 0.2s;
+.feature-title {
+    font-size: 18px;
+    font-weight: 600;
+    margin-bottom: 8px;
+    letter-spacing: -0.3px;
 }
 
-.footer-link:hover{
-  color:var(--text);
+.feature-desc {
+    font-size: 14px;
+    color: var(--text-secondary);
+    line-height: 1.6;
+    font-weight: 400;
 }
 
-/* ========== BOTÃO UIVERSE.IO ========== */
-.button{
-  --dark-purple: #1a0a2e;
-  --mid-purple: #2d1b4e;
-  --light-purple: #4a306d;
-  --pink: #ff99cc;
-  --purple: #b366ff;
-  border-radius: 20px;
-  width: 260px;
-  height: 44px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 10px;
-  padding: 0px 20px;
-  border: none;
-  color: white;
-  position: relative;
-  cursor: pointer;
-  font-weight: 500;
-  font-size: 14px;
-  transition-duration: 0.2s;
-  background: var(--bg);
-  margin-top: 28px;
-  overflow: visible;
+/* Copyright - canto inferior direito */
+.copyright {
+    position: fixed;
+    bottom: 90px;
+    right: 60px;
+    z-index: 3;
+    font-size: 12px;
+    color: var(--text-secondary);
+    opacity: 0.7;
 }
 
-.button .border{
-  position: absolute;
-  inset: 0;
-  border-radius: 20px;
-  padding: 2px;
-  background: linear-gradient(
-    45deg,
-    var(--pink),
-    var(--purple),
-    var(--pink),
-    var(--light-purple),
-    var(--mid-purple),
-    var(--light-purple),
-    var(--pink),
-    var(--purple)
-  );
-  background-size: 400%;
-  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-  -webkit-mask-composite: xor;
-  mask-composite: exclude;
-  pointer-events: none;
-  animation: steam 20s linear infinite;
-  z-index: 0;
+/* Visualizador de barrinhas */
+.viz-footer {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 80px;
+    z-index: 1;
+    pointer-events: none;
+    overflow: hidden;
+    opacity: 0.5;
 }
 
-.button .glow{
-  position: absolute;
-  inset: -4px;
-  border-radius: 24px;
-  background: linear-gradient(
-    45deg,
-    var(--pink),
-    var(--purple),
-    var(--pink),
-    var(--light-purple),
-    var(--mid-purple),
-    var(--light-purple),
-    var(--pink),
-    var(--purple)
-  );
-  background-size: 400%;
-  filter: blur(15px);
-  opacity: 0.5;
-  z-index: -1;
-  pointer-events: none;
-  animation: steam 20s linear infinite;
+.viz-footer canvas {
+    width: 100%;
+    height: 100%;
+    display: block;
 }
 
-@keyframes steam{
-  0%{background-position: 0 0;}
-  50%{background-position: 400% 0;}
-  100%{background-position: 0 0;}
+/* ========== RESPONSIVO ========== */
+@media (max-width: 1200px) {
+    .hero-title {
+        font-size: 60px;
+    }
+    
+    .feature {
+        padding: 36px 28px;
+    }
 }
 
-/* Botão mobile - escondido por padrão */
-.btn-mobile{
-  display:none;
-  background:linear-gradient(135deg, #ff99cc, #b366ff);
-  color:#1a0a2e;
-  padding:14px 32px;
-  border-radius:50px;
-  text-decoration:none;
-  font-weight:600;
-  font-size:16px;
-  box-shadow:0 4px 20px rgba(179,102,255,0.4);
-  transition:transform 0.2s, box-shadow 0.2s;
-  margin-top:20px;
-}
-.btn-mobile:hover{
-  transform:translateY(-2px);
-  box-shadow:0 6px 24px rgba(179,102,255,0.5);
-}
-
-/* Visualizador de barras para mobile (escondido por padrão) */
-.viz-mobile{
-  display:none;
-  position:fixed;
-  bottom:0;
-  left:0;
-  right:0;
-  height:80px;
-  align-items:flex-end;
-  justify-content:center;
-  gap:4px;
-  padding:0 10px;
-  z-index:1;
-}
-.viz-mobile .bar{
-  width:14px;
-  height:var(--h);
-  background:linear-gradient(to top, #b366ff, #ff99cc);
-  border-radius:7px 7px 0 0;
-  animation:barBounce var(--d) ease-in-out infinite alternate;
-  opacity:0.9;
-}
-@keyframes barBounce{
-  0%{height:calc(var(--h) * 0.6);}
-  100%{height:var(--h);}
+@media (max-width: 900px) {
+    .wrapper {
+        padding: 0 32px;
+    }
+    
+    .copyright {
+        right: 32px;
+    }
+    
+    .hero-title {
+        font-size: 48px;
+        letter-spacing: -1px;
+    }
+    
+    .hero-desc {
+        font-size: 18px;
+        max-width: 500px;
+    }
+    
+    .features {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    
+    .feature {
+        padding: 32px 24px;
+    }
 }
 
-@media(max-width:900px){
-  .hero{padding:40px 20px;justify-content:center;align-items:center;text-align:center;min-height:auto;}
-  .hero > div:first-child{text-align:center;margin:0 auto;}
-  .title{font-size:32px;line-height:1.2;white-space:normal;}
-  .title span{display:inline;}
-  .subtitle{margin:20px auto 0;font-size:15px;line-height:1.5;max-width:300px;padding:0 10px;}
-  .button{margin:28px auto 0;width:260px;height:44px;font-size:15px;}
-  .header{flex-direction:column;gap:16px;padding:20px;text-align:center;}
-  .header-logo{font-size:32px;}
-  .header-links{gap:20px;justify-content:center;}
-  .header-link{font-size:14px;}
-  .footer{flex-direction:column;gap:12px;text-align:center;padding-bottom:120px;font-size:13px;}
-  .viz-footer{display:block;height:100px;}
-  .viz-mobile{display:none;}
-  .wrapper{padding:20px 0;}
+@media (max-width: 700px) {
+    .wrapper {
+        padding: 0 20px;
+    }
+
+    .copyright {
+        right: 20px;
+        bottom: 70px;
+    }
+
+    .header {
+        padding: 20px 0;
+    }
+
+    .nav-link:nth-child(2),
+    .nav-link:nth-child(3) {
+        display: none;
+    }
+    
+    .nav {
+        gap: 16px;
+    }
+
+    .main-content {
+        gap: 28px;
+        padding: 16px 0;
+    }
+
+    .hero-title {
+        font-size: 36px;
+        letter-spacing: -0.5px;
+        white-space: normal;
+    }
+
+    .hero-desc {
+        font-size: 16px;
+        margin-bottom: 28px;
+    }
+
+    .hero-actions {
+        flex-direction: column;
+        width: 100%;
+    }
+
+    .btn {
+        width: 100%;
+        justify-content: center;
+        padding: 14px 24px;
+        font-size: 14px;
+    }
+
+    .features {
+        grid-template-columns: 1fr;
+    }
+
+    .feature {
+        padding: 28px 20px;
+    }
+    
+    .feature-title {
+        font-size: 16px;
+    }
+    
+    .feature-desc {
+        font-size: 13px;
+    }
+    
+    .viz-footer {
+        height: 60px;
+    }
+}
+
+@media (max-width: 400px) {
+    .hero-title {
+        font-size: 28px;
+    }
+    
+    .hero-desc {
+        font-size: 15px;
+    }
+    
+    .nav-link {
+        font-size: 12px;
+    }
+    
+    .nav-btn {
+        padding: 8px 16px;
+        font-size: 12px;
+    }
+}
+
+/* Ajustes para telas menores em altura */
+@media (max-height: 800px) {
+    .hero-title {
+        font-size: 56px;
+    }
+    
+    .main-content {
+        gap: 30px;
+    }
+    
+    .feature {
+        padding: 28px 24px;
+    }
+    
+    .feature-icon {
+        margin-bottom: 14px;
+    }
+}
+
+@media (max-height: 700px) {
+    .hero-title {
+        font-size: 48px;
+        margin-bottom: 14px;
+    }
+    
+    .hero-desc {
+        margin-bottom: 24px;
+        font-size: 18px;
+    }
+    
+    .main-content {
+        gap: 24px;
+    }
+    
+    .feature {
+        padding: 24px 20px;
+    }
+    
+    .hero-label {
+        margin-bottom: 14px;
+    }
+}
+
+@media (max-height: 600px) {
+    .header {
+        padding: 16px 0;
+    }
+    
+    .hero-title {
+        font-size: 40px;
+    }
+    
+    .hero-desc {
+        font-size: 16px;
+        margin-bottom: 20px;
+    }
+    
+    .main-content {
+        gap: 20px;
+    }
+    
+    .feature {
+        padding: 20px 16px;
+    }
+    
+    .feature-icon {
+        margin-bottom: 10px;
+    }
 }
 </style>
 </head>
 
 <body>
 
-<canvas class="space-bg" id="spaceBg"></canvas>
+    <canvas class="space-bg" id="spaceBg"></canvas>
 
-<div class="wrapper">
-  <div class="header">
-    <span class="header-logo">Spatialify</span>
-    <div class="header-links">
-      <a href="#" class="header-link">Documentação</a>
-      <a href="#" class="header-link">API</a>
-      <a href="#" class="header-link">GitHub</a>
+    <div class="wrapper">
+        <header class="header">
+            <a href="#" class="logo">Spatial<span>ify</span></a>
+            <nav class="nav">
+                <a href="#" class="nav-link">Documentação</a>
+                <a href="#" class="nav-link">API</a>
+                <a href="#" class="nav-link">GitHub</a>
+                <a href="#" class="nav-btn">Baixar</a>
+            </nav>
+        </header>
+
+        <div class="main-content">
+            <section class="hero">
+                <h1 class="hero-title">
+                    Áudio <strong>espacial</strong> com um clique
+                </h1>
+                <p class="hero-desc">
+                    Som 3D imersivo direto do navegador. Simples, rápido e open source.
+                </p>
+                <div class="hero-actions">
+                    <a href="#" class="btn btn-primary">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/>
+                            <polyline points="7 10 12 15 17 10"/>
+                            <line x1="12" y1="15" x2="12" y2="3"/>
+                        </svg>
+                        Baixar extensão
+                    </a>
+                    <a href="#" class="btn btn-ghost">
+                        Documentação
+                    </a>
+                </div>
+            </section>
+
+            <div class="features">
+                <div class="feature">
+                    <svg class="feature-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                        <circle cx="12" cy="12" r="10"/>
+                        <circle cx="12" cy="12" r="2"/>
+                    </svg>
+                    <h3 class="feature-title">Expansão estéreo inteligente</h3>
+                    <p class="feature-desc">Transforme áudio comum em um palco sonoro amplo e envolvente automaticamente.</p>
+                </div>
+                <div class="feature">
+                    <svg class="feature-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                        <polyline points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/>
+                    </svg>
+                    <h3 class="feature-title">Funciona no YouTube e Spotify</h3>
+                    <p class="feature-desc">Ative o efeito diretamente em músicas, vídeos e lives sem precisar sair do site.</p>
+                </div>
+                <div class="feature">
+                    <svg class="feature-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                        <path d="M12 2L2 7l10 5 10-5-10-5z"/>
+                    </svg>
+                    <h3 class="feature-title">Foco no que importa</h3>
+                    <p class="feature-desc">Realça elementos principais sem poluir o áudio.</p>
+                </div>
+            </div>
+        </div>
     </div>
-  </div>
 
-  <div class="hero">
-    <div>
-      <div class="title">Transforme sua experiência <span>espacial</span>!</div>
-      <div class="subtitle">
-        Experimente profundidade, direção e presença sonora em uma nova dimensão.
-      </div>
-   
-      <button class="button">
-        <span class="border"></span>
-        <span class="glow"></span>
-        Baixe no seu navegador!
-      </button>
+    <div class="copyright">© 2026 Spatiality</div>
+
+    <div class="viz-footer">
+        <canvas id="viz"></canvas>
     </div>
-  </div>
 
-  <div class="viz-footer">
-    <canvas id="viz"></canvas>
-  </div>
+    <script defer>
+        (function() {
+            "use strict";
 
-  <div class="footer">
-    <span>Áudio Espacial</span>
-    <span>© 2026 Spatiality</span>
-  </div>
-</div>
+            // ================================================================
+            // FUNDO ESPACIAL - ADAPTADO PARA AS CORES DO SITE (#ff99cc)
+            // ================================================================
+            const spaceCanvas = document.getElementById('spaceBg');
+            const ctx = spaceCanvas.getContext('2d');
+            let spaceTime = 0;
+            let spaceAnimationFrame = null;
+            
+            const BG_STARS = 400;
+            const MILKY_WAY_STARS = 600;
+            
+            // Estrelas de fundo
+            const bgStars = [];
+            for (let i = 0; i < BG_STARS; i++) {
+                bgStars.push({
+                    x: Math.random(),
+                    y: Math.random(),
+                    size: Math.random() * 0.8 + 0.2,
+                    alpha: Math.random() * 0.4 + 0.1,
+                    twinkleSpeed: 0.01 + Math.random() * 0.02,
+                    twinklePhase: Math.random() * Math.PI * 2,
+                    color: Math.random() > 0.85 ? [255, 153, 204] : [255, 255, 255]
+                });
+            }
+            
+            // Via Láctea
+            const milkyWayStars = [];
+            for (let i = 0; i < MILKY_WAY_STARS; i++) {
+                const t = Math.random();
+                const spread = (Math.random() - 0.5) * 0.25;
+                const x = t + spread * 0.8;
+                const y = t * 0.6 + 0.2 + spread;
+                
+                if (x >= 0 && x <= 1 && y >= 0 && y <= 1) {
+                    milkyWayStars.push({
+                        x: x,
+                        y: y,
+                        baseX: x,
+                        baseY: y,
+                        size: Math.random() * 1.5 + 0.5,
+                        alpha: Math.random() * 0.7 + 0.3,
+                        twinkleSpeed: 0.015 + Math.random() * 0.025,
+                        twinklePhase: Math.random() * Math.PI * 2,
+                        driftSpeed: 0.0002 + Math.random() * 0.0003,
+                        driftPhase: Math.random() * Math.PI * 2,
+                        color: Math.random() > 0.6 ? [255, 200, 220] :
+                               Math.random() > 0.4 ? [255, 180, 200] :
+                               [255, 255, 255]
+                    });
+                }
+            }
+            
+            // Poeira cósmica
+            const cosmicDust = [];
+            for (let i = 0; i < 150; i++) {
+                cosmicDust.push({
+                    x: Math.random(),
+                    y: Math.random(),
+                    vx: (Math.random() - 0.5) * 0.0003,
+                    vy: (Math.random() - 0.5) * 0.0003,
+                    size: Math.random() * 1.2 + 0.3,
+                    alpha: Math.random() * 0.4 + 0.15,
+                    hue: 320 + Math.random() * 30
+                });
+            }
 
-<!-- Visualizador mobile com barras grossas -->
-<div class="viz-mobile">
-  <div class="bar" style="--h:40%;--d:0.8s"></div>
-  <div class="bar" style="--h:60%;--d:1.1s"></div>
-  <div class="bar" style="--h:45%;--d:0.6s"></div>
-  <div class="bar" style="--h:70%;--d:0.9s"></div>
-  <div class="bar" style="--h:55%;--d:1.2s"></div>
-  <div class="bar" style="--h:80%;--d:0.7s"></div>
-  <div class="bar" style="--h:50%;--d:1.0s"></div>
-  <div class="bar" style="--h:65%;--d:0.5s"></div>
-  <div class="bar" style="--h:75%;--d:1.3s"></div>
-  <div class="bar" style="--h:40%;--d:0.8s"></div>
-  <div class="bar" style="--h:85%;--d:1.1s"></div>
-  <div class="bar" style="--h:55%;--d:0.6s"></div>
-  <div class="bar" style="--h:70%;--d:0.9s"></div>
-  <div class="bar" style="--h:45%;--d:1.2s"></div>
-  <div class="bar" style="--h:60%;--d:0.7s"></div>
-  <div class="bar" style="--h:75%;--d:1.0s"></div>
-  <div class="bar" style="--h:50%;--d:0.5s"></div>
-  <div class="bar" style="--h:65%;--d:1.3s"></div>
-  <div class="bar" style="--h:80%;--d:0.8s"></div>
-  <div class="bar" style="--h:55%;--d:1.1s"></div>
-</div>
+            function resizeSpaceCanvas() {
+                spaceCanvas.width = window.innerWidth;
+                spaceCanvas.height = window.innerHeight;
+            }
+            window.addEventListener('resize', resizeSpaceCanvas);
+            resizeSpaceCanvas();
 
-<script defer>
-(function() {
-  "use strict";
+            function drawSpace() {
+                const w = spaceCanvas.width;
+                const h = spaceCanvas.height;
+                
+                if (w === 0 || h === 0) {
+                    spaceAnimationFrame = requestAnimationFrame(drawSpace);
+                    return;
+                }
+                
+                // Fundo escuro com tom rosado
+                const bgGrad = ctx.createRadialGradient(w * 0.5, h * 0.4, 0, w * 0.5, h * 0.4, Math.max(w, h));
+                bgGrad.addColorStop(0, '#0d0a0c');
+                bgGrad.addColorStop(0.3, '#080608');
+                bgGrad.addColorStop(0.7, '#040304');
+                bgGrad.addColorStop(1, '#010101');
+                ctx.fillStyle = bgGrad;
+                ctx.fillRect(0, 0, w, h);
+                
+                // Via Láctea com tons rosados
+                milkyWayStars.forEach(star => {
+                    star.driftPhase += star.driftSpeed;
+                    const driftX = Math.cos(star.driftPhase) * 0.008;
+                    const driftY = Math.sin(star.driftPhase * 0.7) * 0.005;
+                    
+                    const sx = (star.baseX + driftX) * w;
+                    const sy = (star.baseY + driftY) * h;
+                    
+                    const twinkle = Math.sin(spaceTime * star.twinkleSpeed + star.twinklePhase);
+                    const currentAlpha = star.alpha * (0.6 + twinkle * 0.4);
+                    
+                    const [r, g, b] = star.color;
+                    
+                    const glowSize = star.size * 2;
+                    const glow = ctx.createRadialGradient(sx, sy, 0, sx, sy, glowSize);
+                    glow.addColorStop(0, `rgba(${r}, ${g}, ${b}, ${currentAlpha * 0.3})`);
+                    glow.addColorStop(1, 'transparent');
+                    ctx.fillStyle = glow;
+                    ctx.beginPath();
+                    ctx.arc(sx, sy, glowSize, 0, Math.PI * 2);
+                    ctx.fill();
+                    
+                    ctx.fillStyle = `rgba(${r}, ${g}, ${b}, ${currentAlpha})`;
+                    ctx.beginPath();
+                    ctx.arc(sx, sy, star.size, 0, Math.PI * 2);
+                    ctx.fill();
+                });
+                
+                // Estrelas de fundo
+                bgStars.forEach(star => {
+                    const twinkle = Math.sin(spaceTime * star.twinkleSpeed + star.twinklePhase);
+                    const currentAlpha = star.alpha * (0.5 + twinkle * 0.5);
+                    const sx = star.x * w;
+                    const sy = star.y * h;
+                    
+                    const [r, g, b] = star.color;
+                    ctx.fillStyle = `rgba(${r}, ${g}, ${b}, ${currentAlpha})`;
+                    ctx.beginPath();
+                    ctx.arc(sx, sy, star.size, 0, Math.PI * 2);
+                    ctx.fill();
+                });
+                
+                // Poeira cósmica rosada
+                cosmicDust.forEach(p => {
+                    p.x += p.vx;
+                    p.y += p.vy;
+                    
+                    if (p.x < 0) p.x = 1;
+                    if (p.x > 1) p.x = 0;
+                    if (p.y < 0) p.y = 1;
+                    if (p.y > 1) p.y = 0;
+                    
+                    const px = p.x * w;
+                    const py = p.y * h;
+                    
+                    ctx.fillStyle = `hsla(${p.hue}, 40%, 65%, ${p.alpha})`;
+                    ctx.beginPath();
+                    ctx.arc(px, py, p.size, 0, Math.PI * 2);
+                    ctx.fill();
+                });
+                
+                spaceTime += 0.016;
+                spaceAnimationFrame = requestAnimationFrame(drawSpace);
+            }
+            drawSpace();
 
-  // ================================================================
-  // FUNDO ESPACIAL: GALÁXIA REALISTA COM VIA LÁCTEA
-  // Campo estelar denso e poeira cósmica
-  // ================================================================
-  const spaceCanvas = document.getElementById('spaceBg');
-  const ctx = spaceCanvas.getContext('2d');
-  let time = 0;
-  let animationFrame = null;
-  
-  // Configurações da galáxia
-  const BG_STARS = 400;
-  const MILKY_WAY_STARS = 600;
-  
-  // Estrelas do campo de fundo (dispersas)
-  const bgStars = [];
-  for (let i = 0; i < BG_STARS; i++) {
-    bgStars.push({
-      x: Math.random(),
-      y: Math.random(),
-      size: Math.random() * 0.8 + 0.2,
-      alpha: Math.random() * 0.4 + 0.1,
-      twinkleSpeed: 0.01 + Math.random() * 0.02,
-      twinklePhase: Math.random() * Math.PI * 2,
-      color: Math.random() > 0.9 ? [180, 200, 255] : [255, 255, 255]
-    });
-  }
-  
-  // Via Látea - banda densa de estrelas com movimento sutil
-  const milkyWayStars = [];
-  for (let i = 0; i < MILKY_WAY_STARS; i++) {
-    const t = Math.random();
-    const spread = (Math.random() - 0.5) * 0.25;
-    const x = t + spread * 0.8;
-    const y = t * 0.6 + 0.2 + spread;
-    
-    if (x >= 0 && x <= 1 && y >= 0 && y <= 1) {
-      milkyWayStars.push({
-        x: x,
-        y: y,
-        baseX: x,
-        baseY: y,
-        size: Math.random() * 1.5 + 0.5,
-        alpha: Math.random() * 0.7 + 0.3,
-        twinkleSpeed: 0.015 + Math.random() * 0.025,
-        twinklePhase: Math.random() * Math.PI * 2,
-        driftSpeed: 0.0002 + Math.random() * 0.0003,
-        driftPhase: Math.random() * Math.PI * 2,
-        color: Math.random() > 0.7 ? [255, 240, 200] :
-               Math.random() > 0.5 ? [200, 220, 255] :
-               [255, 255, 255]
-      });
-    }
-  }
-  
-  // Poeira cósmica flutuante
-  const cosmicDust = [];
-  for (let i = 0; i < 150; i++) {
-    cosmicDust.push({
-      x: Math.random(),
-      y: Math.random(),
-      vx: (Math.random() - 0.5) * 0.0003,
-      vy: (Math.random() - 0.5) * 0.0003,
-      size: Math.random() * 1.2 + 0.3,
-      alpha: Math.random() * 0.5 + 0.2,
-      hue: 280 + Math.random() * 60
-    });
-  }
+            // ================================================================
+            // VISUALIZADOR DE BARRINHAS
+            // ================================================================
+            const canvas = document.getElementById("viz");
+            let vizAnimationFrame = null;
+            
+            const BARS = 96;
+            let phases = new Array(BARS).fill(0).map(() => Math.random() * Math.PI * 2);
+            let smoothValues = new Array(BARS).fill(0.3);
+            
+            let timeViz = 0;
+            
+            if (!CanvasRenderingContext2D.prototype.roundRect) {
+                CanvasRenderingContext2D.prototype.roundRect = function(x, y, w, h, r) {
+                    if (w < 2 * r) r = w / 2;
+                    if (h < 2 * r) r = h / 2;
+                    this.moveTo(x + r, y);
+                    this.lineTo(x + w - r, y);
+                    this.quadraticCurveTo(x + w, y, x + w, y + r);
+                    this.lineTo(x + w, y + h - r);
+                    this.quadraticCurveTo(x + w, y + h, x + w - r, y + h);
+                    this.lineTo(x + r, y + h);
+                    this.quadraticCurveTo(x, y + h, x, y + h - r);
+                    this.lineTo(x, y + r);
+                    this.quadraticCurveTo(x, y, x + r, y);
+                    return this;
+                };
+            }
 
-  function resizeCanvas() {
-    spaceCanvas.width = window.innerWidth;
-    spaceCanvas.height = window.innerHeight;
-  }
-  window.addEventListener('resize', resizeCanvas);
-  resizeCanvas();
+            function drawViz() {
+                if (!canvas) return;
+                
+                const ctxViz = canvas.getContext('2d');
+                const W = canvas.offsetWidth;
+                const H = canvas.offsetHeight;
 
-  function drawSpace() {
-    const w = spaceCanvas.width;
-    const h = spaceCanvas.height;
-    
-    if (w === 0 || h === 0) {
-      animationFrame = requestAnimationFrame(drawSpace);
-      return;
-    }
-    
-    // Fundo espacial profundo
-    const bgGrad = ctx.createRadialGradient(w * 0.5, h * 0.4, 0, w * 0.5, h * 0.4, Math.max(w, h));
-    bgGrad.addColorStop(0, '#0c0a18');
-    bgGrad.addColorStop(0.3, '#060510');
-    bgGrad.addColorStop(0.7, '#030308');
-    bgGrad.addColorStop(1, '#010103');
-    ctx.fillStyle = bgGrad;
-    ctx.fillRect(0, 0, w, h);
-    
-    // Via Látea com movimento sutil
-    milkyWayStars.forEach(star => {
-      star.driftPhase += star.driftSpeed;
-      const driftX = Math.cos(star.driftPhase) * 0.008;
-      const driftY = Math.sin(star.driftPhase * 0.7) * 0.005;
-      
-      const sx = (star.baseX + driftX) * w;
-      const sy = (star.baseY + driftY) * h;
-      
-      const twinkle = Math.sin(time * star.twinkleSpeed + star.twinklePhase);
-      const currentAlpha = star.alpha * (0.6 + twinkle * 0.4);
-      
-      const [r, g, b] = star.color;
-      
-      const glowSize = star.size * 2;
-      const glow = ctx.createRadialGradient(sx, sy, 0, sx, sy, glowSize);
-      glow.addColorStop(0, `rgba(${r}, ${g}, ${b}, ${currentAlpha * 0.4})`);
-      glow.addColorStop(1, 'transparent');
-      ctx.fillStyle = glow;
-      ctx.beginPath();
-      ctx.arc(sx, sy, glowSize, 0, Math.PI * 2);
-      ctx.fill();
-      
-      ctx.fillStyle = `rgba(${r}, ${g}, ${b}, ${currentAlpha})`;
-      ctx.beginPath();
-      ctx.arc(sx, sy, star.size, 0, Math.PI * 2);
-      ctx.fill();
-    });
-    
-    // Estrelas de fundo
-    bgStars.forEach(star => {
-      const twinkle = Math.sin(time * star.twinkleSpeed + star.twinklePhase);
-      const currentAlpha = star.alpha * (0.5 + twinkle * 0.5);
-      const sx = star.x * w;
-      const sy = star.y * h;
-      
-      const [r, g, b] = star.color;
-      ctx.fillStyle = `rgba(${r}, ${g}, ${b}, ${currentAlpha})`;
-      ctx.beginPath();
-      ctx.arc(sx, sy, star.size, 0, Math.PI * 2);
-      ctx.fill();
-    });
-    
-    // Poeira cósmica
-    cosmicDust.forEach(p => {
-      p.x += p.vx;
-      p.y += p.vy;
-      
-      if (p.x < 0) p.x = 1;
-      if (p.x > 1) p.x = 0;
-      if (p.y < 0) p.y = 1;
-      if (p.y > 1) p.y = 0;
-      
-      const px = p.x * w;
-      const py = p.y * h;
-      
-      ctx.fillStyle = `hsla(${p.hue}, 50%, 70%, ${p.alpha})`;
-      ctx.beginPath();
-      ctx.arc(px, py, p.size, 0, Math.PI * 2);
-      ctx.fill();
-    });
-    
-    time += 0.016;
-    animationFrame = requestAnimationFrame(drawSpace);
-  }
-  drawSpace();
+                if (W === 0 || H === 0) {
+                    vizAnimationFrame = requestAnimationFrame(drawViz);
+                    return;
+                }
 
-  // ================================================================
-  // VISUALIZADOR DE BARRINHAS - ANIMAÇÃO SUAVE E NATURAL
-  // ================================================================
-  const canvas = document.getElementById("viz");
-  let vizAnimationFrame = null;
-  
-  // Detectar mobile para ajustar barras
-  const isMobile = window.innerWidth <= 900;
-  const BARS = isMobile ? 48 : 96;
-  let phases = new Array(BARS).fill(0).map(() => Math.random() * Math.PI * 2);
-  let smoothValues = new Array(BARS).fill(0.3);
-  
-  let timeViz = 0;
-  
-  // Adicionar método roundRect se não existir
-  if (!CanvasRenderingContext2D.prototype.roundRect) {
-    CanvasRenderingContext2D.prototype.roundRect = function(x, y, w, h, r) {
-      if (w < 2 * r) r = w / 2;
-      if (h < 2 * r) r = h / 2;
-      this.moveTo(x + r, y);
-      this.lineTo(x + w - r, y);
-      this.quadraticCurveTo(x + w, y, x + w, y + r);
-      this.lineTo(x + w, y + h - r);
-      this.quadraticCurveTo(x + w, y + h, x + w - r, y + h);
-      this.lineTo(x + r, y + h);
-      this.quadraticCurveTo(x, y + h, x, y + h - r);
-      this.lineTo(x, y + r);
-      this.quadraticCurveTo(x, y, x + r, y);
-      return this;
-    };
-  }
+                if (canvas.width !== W || canvas.height !== H) {
+                    canvas.width = W;
+                    canvas.height = H;
+                }
 
-  function drawViz() {
-    if (!canvas) return;
-    
-    const ctxViz = canvas.getContext('2d');
-    const W = canvas.offsetWidth;
-    const H = canvas.offsetHeight;
+                ctxViz.clearRect(0, 0, W, H);
+                
+                timeViz += 0.02;
+                const barWidth = W / BARS;
 
-    if (W === 0 || H === 0) {
-      vizAnimationFrame = requestAnimationFrame(drawViz);
-      return;
-    }
+                for (let i = 0; i < BARS; i++) {
+                    const t = i / (BARS - 1);
+                    
+                    const centerDist = Math.abs(t - 0.5) * 2;
+                    const baseShape = Math.exp(-centerDist * centerDist * 2.5) * 0.5;
+                    
+                    const wave1 = Math.sin(timeViz * 1.5 + t * 4) * 0.2;
+                    const wave2 = Math.sin(timeViz * 2.5 + i * 0.3 + phases[i]) * 0.15;
+                    const wave3 = Math.cos(timeViz * 1.8 + t * 6) * 0.1;
+                    
+                    let targetValue = 0.2 + baseShape + wave1 + wave2 + wave3;
+                    
+                    targetValue = Math.max(0.15, Math.min(0.8, targetValue));
+                    
+                    const diff = targetValue - smoothValues[i];
+                    smoothValues[i] += diff * 0.08;
+                    
+                    const value = smoothValues[i];
+                    const barHeight = value * H * 0.85;
+                    
+                    const x = i * barWidth;
+                    
+                    const hue = 315 + (1 - centerDist) * 25;
+                    const saturation = 65;
+                    const lightness = 48 + value * 22;
+                    
+                    const gradient = ctxViz.createLinearGradient(0, H - barHeight, 0, H);
+                    gradient.addColorStop(0, `hsla(${hue}, ${saturation}%, ${lightness}%, 0.9)`);
+                    gradient.addColorStop(0.4, `hsla(${hue}, ${saturation - 8}%, ${lightness - 4}%, 0.55)`);
+                    gradient.addColorStop(1, 'transparent');
+                    
+                    ctxViz.fillStyle = gradient;
+                    
+                    const gap = 3;
+                    const w = Math.max(2, barWidth - gap);
+                    const bx = x + gap / 2;
+                    const by = H - barHeight;
+                    const radius = Math.min(4, w * 0.35);
+                    
+                    ctxViz.beginPath();
+                    ctxViz.roundRect(bx, by, w, barHeight, radius);
+                    ctxViz.fill();
+                }
 
-    if (canvas.width !== W || canvas.height !== H) {
-      canvas.width = W;
-      canvas.height = H;
-    }
+                vizAnimationFrame = requestAnimationFrame(drawViz);
+            }
+            
+            drawViz();
 
-    ctxViz.clearRect(0, 0, W, H);
-    
-    // Tempo mais rápido para animação visível
-    timeViz += 0.02;
-    const barWidth = W / BARS;
-
-    for (let i = 0; i < BARS; i++) {
-      const t = i / (BARS - 1); // 0 a 1
-      
-      // Forma base: montanha suave no centro
-      const centerDist = Math.abs(t - 0.5) * 2;
-      const baseShape = Math.exp(-centerDist * centerDist * 2.5) * 0.5;
-      
-      // Ondas animadas - mais rápidas e visíveis
-      const wave1 = Math.sin(timeViz * 1.5 + t * 4) * 0.2;
-      const wave2 = Math.sin(timeViz * 2.5 + i * 0.3 + phases[i]) * 0.15;
-      const wave3 = Math.cos(timeViz * 1.8 + t * 6) * 0.1;
-      
-      // Combinar - base + ondas animadas
-      let targetValue = 0.2 + baseShape + wave1 + wave2 + wave3;
-      
-      // Limitar
-      targetValue = Math.max(0.15, Math.min(0.8, targetValue));
-      
-      // Suavização média - equilíbrio entre fluido e responsivo
-      const diff = targetValue - smoothValues[i];
-      smoothValues[i] += diff * 0.08;
-      
-      const value = smoothValues[i];
-      const barHeight = value * H * 0.85;
-      
-      const x = i * barWidth;
-      
-      // Cores roxas/rosa tipo a imagem (mais saturadas)
-      // Centro mais roxo, pontas mais rosa
-      const hue = 280 + (1 - centerDist) * 40; // 280-320 (roxo para rosa)
-      const saturation = 70;
-      const lightness = 45 + value * 25;
-      
-      // Gradiente vertical suave
-      const gradient = ctxViz.createLinearGradient(0, H - barHeight, 0, H);
-      gradient.addColorStop(0, `hsla(${hue}, ${saturation}%, ${lightness}%, 0.95)`);
-      gradient.addColorStop(0.4, `hsla(${hue}, ${saturation - 10}%, ${lightness - 5}%, 0.6)`);
-      gradient.addColorStop(1, 'transparent');
-      
-      ctxViz.fillStyle = gradient;
-      
-      // Barras mais largas, espaçamento pequeno
-      const gap = 3;
-      const w = Math.max(2, barWidth - gap);
-      const bx = x + gap / 2;
-      const by = H - barHeight;
-      const radius = Math.min(4, w * 0.35);
-      
-      ctxViz.beginPath();
-      ctxViz.roundRect(bx, by, w, barHeight, radius);
-      ctxViz.fill();
-    }
-
-    vizAnimationFrame = requestAnimationFrame(drawViz);
-  }
-  
-  drawViz();
-
-  window.addEventListener('beforeunload', () => {
-    if (animationFrame) cancelAnimationFrame(animationFrame);
-    if (vizAnimationFrame) cancelAnimationFrame(vizAnimationFrame);
-  });
-
-})();
-</script>
+            window.addEventListener('beforeunload', () => {
+                if (spaceAnimationFrame) cancelAnimationFrame(spaceAnimationFrame);
+                if (vizAnimationFrame) cancelAnimationFrame(vizAnimationFrame);
+            });
+        })();
+    </script>
 
 </body>
 </html>
