@@ -128,6 +128,7 @@ canvas.space-bg {
 /* Hero */
 .hero {
     flex-shrink: 0;
+    padding-left: 60px;
 }
 
 .hero-label {
@@ -284,6 +285,10 @@ canvas.space-bg {
     .feature {
         padding: 36px 28px;
     }
+    
+    .hero {
+        padding-left: 40px;
+    }
 }
 
 @media (max-width: 900px) {
@@ -311,6 +316,10 @@ canvas.space-bg {
     
     .feature {
         padding: 32px 24px;
+    }
+    
+    .hero {
+        padding-left: 20px;
     }
 }
 
@@ -340,6 +349,10 @@ canvas.space-bg {
     .main-content {
         gap: 28px;
         padding: 16px 0;
+    }
+
+    .hero {
+        padding-left: 0;
     }
 
     .hero-title {
@@ -474,6 +487,43 @@ canvas.space-bg {
         margin-bottom: 10px;
     }
 }
+/* Animação de fade-in elemento por elemento */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Todos os elementos principais começam invisíveis */
+.wrapper > *,
+.main-content > *,
+.hero-actions > *,
+.feature,
+.step,
+.faq-item {
+    opacity: 0;
+    animation: fadeIn 0.6s ease-out forwards;
+}
+
+/* Sequência do wrapper */
+.wrapper > *:nth-child(1) { animation-delay: 0.1s; }
+.wrapper > *:nth-child(2) { animation-delay: 0.3s; }
+.wrapper > *:nth-child(3) { animation-delay: 0.5s; }
+
+/* Sequência do main content */
+.main-content > *:nth-child(1) { animation-delay: 0.2s; }
+.main-content > *:nth-child(2) { animation-delay: 0.4s; }
+.main-content > *:nth-child(3) { animation-delay: 0.6s; }
+.main-content > *:nth-child(4) { animation-delay: 0.8s; }
+.main-content > *:nth-child(5) { animation-delay: 1.0s; }
+.main-content > *:nth-child(6) { animation-delay: 1.2s; }
+.main-content > *:nth-child(7) { animation-delay: 1.4s; }
+.main-content > *:nth-child(8) { animation-delay: 1.6s; }
 </style>
 </head>
 
@@ -485,10 +535,9 @@ canvas.space-bg {
         <header class="header">
             <a href="#" class="logo">Spatial<span>ify</span></a>
             <nav class="nav">
-                <a href="#" class="nav-link">Documentação</a>
-                <a href="#" class="nav-link">API</a>
-                <a href="#" class="nav-link">GitHub</a>
-                <a href="#" class="nav-btn">Baixar</a>
+                <a href="docs.html" class="nav-link">Documentação</a>
+                <a href="https://github.com/YasminBevilaqua/Spatialify" class="nav-link" target="_blank">GitHub</a>
+                <a href="https://addons.mozilla.org/en-US/firefox/addon/spatialify/" class="nav-btn" target="_blank">Baixar</a>
             </nav>
         </header>
 
@@ -498,10 +547,10 @@ canvas.space-bg {
                     Áudio <strong>espacial</strong> com um clique
                 </h1>
                 <p class="hero-desc">
-                    Som 3D imersivo direto do navegador. Simples, rápido e open source.
+                    Ouça além do som direto do navegador. 
                 </p>
                 <div class="hero-actions">
-                    <a href="#" class="btn btn-primary">
+                    <a href="https://addons.mozilla.org/en-US/firefox/addon/spatialify/" class="btn btn-primary" target="_blank">
                         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                             <path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/>
                             <polyline points="7 10 12 15 17 10"/>
@@ -509,7 +558,7 @@ canvas.space-bg {
                         </svg>
                         Baixar extensão
                     </a>
-                    <a href="#" class="btn btn-ghost">
+                    <a href="docs.html" class="btn btn-ghost">
                         Documentação
                     </a>
                 </div>
